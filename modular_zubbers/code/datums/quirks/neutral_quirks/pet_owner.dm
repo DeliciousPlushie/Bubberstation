@@ -98,6 +98,12 @@ GLOBAL_LIST_INIT(possible_player_pet, list(
 	"Stoat" = /mob/living/basic/stoat,
 	"Tegu" = /mob/living/basic/lizard/tegu,
 	"Tiger" = /mob/living/basic/pet/cat/tiger,
+	"蛞蝓猫" = /mob/living/basic/pet/slugcat,	//宠物
+	"魔法兽" = /mob/living/basic/pet/magicfur,
+	"白魔法兽" = /mob/living/basic/pet/magicfur/white,
+	"黑魔法兽" = /mob/living/basic/pet/magicfur/black,
+	"粉魔法兽" = /mob/living/basic/pet/magicfur/pink,
+	"miku魔法兽" = /mob/living/basic/pet/magicfur/miku,
 )) //some of these are too big to be put back into the pet carrier once taken out, so I put a warning on the carrier.
 
 /datum/preference/choiced/pet_owner/init_possible_values()
