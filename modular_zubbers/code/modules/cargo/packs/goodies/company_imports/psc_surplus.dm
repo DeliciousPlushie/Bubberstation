@@ -67,7 +67,7 @@
 
 /datum/supply_pack/company_import/psc_surplus/misc/food_replicator
 	item_type = /obj/item/circuitboard/machine/biogenerator/food_replicator
-	desc = "这项技术曾经十分普及，被众多 PSC 边缘殖民地乃至一些地球政府辖地使用，但最终因地球政府宣传其无利可图、并对任何试图销售它的人课以重税而不再流行。仍有一小部分政府支持的厂商在为私人和政府用途生产“食物复制机”；其中几家正通过我们销售这种产品。"
+	desc = "这项技术曾经十分普及，被众多 PSC 边缘殖民地乃至一些地球政府辖地使用，但最终因地球政府宣传其无利可图、并对任何试图销售它的人课以重税而不再流行。仍有一小部分政府支持的厂商在为私人和政府用途生产“食物复制机”；其中几家正通过我们销售这种产品。无法在空间站上建造或部署。"
 	cost = CARGO_CRATE_VALUE * 9
 
 /datum/supply_pack/company_import/psc_surplus/misc/nri_flag

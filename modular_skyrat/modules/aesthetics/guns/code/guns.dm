@@ -19,10 +19,8 @@
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 
 /obj/item/gun/ballistic/shotgun/riot
-	name = "伍德斯托克霰弹枪"
-	desc = "一把结实的霰弹枪，配有加长弹仓和固定战术枪托，专为非致命防暴设计。常出现在拉瓦兰猎人的手中。它隐约让你想起在太阳系狩猎的日子，不是吗？"
+	name = "木托霰弹枪"
 	fire_delay = 6 //We slighly bump this up because thats a good idea
-	sawn_desc = "想活命就跟我走。"
 
 /obj/item/gun/ballistic/shotgun/automatic/combat
 	name = "\improper 维和者战斗霰弹枪"

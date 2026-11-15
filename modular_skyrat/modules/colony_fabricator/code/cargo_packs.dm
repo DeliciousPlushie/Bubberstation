@@ -15,15 +15,15 @@
 
 /datum/supply_pack/service/frontier_kitchen
 	name = "边疆厨房设备"
-	desc = "一系列经典的边疆电器，无论你身处银河何处，都足够搭起一间能正常运转的厨房。"
+	desc = "一系列经典的边疆电器，无论你身处银河何处，都足够搭起一间能正常运转的厨房。平板包装的内容物无法在空间站上部署。"
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(
-		/obj/machinery/plumbing/synthesizer/water_synth,
-		/obj/machinery/chem_dispenser/frontier_appliance,
-		/obj/machinery/griddle/frontier_tabletop/unanchored,
-		/obj/machinery/microwave/frontier_printed/unanchored,
-		/obj/machinery/oven/range_frontier/unanchored,
-		/obj/machinery/biogenerator/foodricator,
+		/obj/item/flatpacked_machine/water_synth,
+		/obj/item/flatpacked_machine/sustenance_machine,
+		/obj/item/flatpacked_machine/frontier_griddle,
+		/obj/item/flatpacked_machine/macrowave,
+		/obj/item/flatpacked_machine/frontier_range,
+		/obj/item/flatpacked_machine/organics_ration_printer,
 	)
 	crate_name = "边疆厨房板条箱"
 
@@ -31,7 +31,7 @@
 
 /datum/supply_pack/engineering/colony_starter
 	name = "殖民启动套装"
-	desc = "太阳系标准的边疆殖民最低配置套装，内含在银河系大多数地方建立一座基本可运转殖民地所需的一切。"
+	desc = "太阳系标准的边疆殖民最低配置套装，内含在银河系大多数地方建立一座基本可运转殖民地所需的一切。平板包装的内容物无法在空间站上部署。"
 	cost = CARGO_CRATE_VALUE * 35 // 30 for the lathe, the rest for the organics printer and supplies
 	contains = list(
 		/obj/item/flatpacked_machine,

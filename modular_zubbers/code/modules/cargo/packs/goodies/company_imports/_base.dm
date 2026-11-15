@@ -1,7 +1,8 @@
 #define CARGO_CUT 0.05
+#define COMPANY_IMPORT_DEFAULT_DESC "内含一件进口公司商品。"
 
 /datum/supply_pack/company_import
-	desc = "内含一件进口公司商品。"
+	desc = COMPANY_IMPORT_DEFAULT_DESC
 	group = "Company Imports"
 	order_flags = ORDER_GOODY
 	crate_type = null
@@ -15,9 +16,9 @@
 	if(!item_type)
 		return
 	contains = list(item_type)
-	name = "[item_type::name] 单件装"
-	if(desc == initial(desc))
-		desc = "内含一件 [item_type::name]。"
+	name = "[item_type::name]单件装"
+	if(desc == COMPANY_IMPORT_DEFAULT_DESC)
+		desc = "内含一件[item_type::name]。"
 	if(CONFIG_GET(flag/permit_pins) && item_type && istype(item_type, /obj/item/gun))
 		desc += "该枪械会附带一个已安装的许可击发针。"
 
@@ -34,3 +35,4 @@
 		gun_actually.pin = new_pin
 
 #undef CARGO_CUT
+#undef COMPANY_IMPORT_DEFAULT_DESC
