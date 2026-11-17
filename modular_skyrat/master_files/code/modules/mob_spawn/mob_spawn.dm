@@ -50,12 +50,16 @@
 
 /// This edit would cause somewhat ugly diffs, so I'm just replacing it.
 /// Original proc in code/modules/mob_spawn/mob_spawn.dm ~line 39.
-/obj/effect/mob_spawn/create(mob/mob_possessor, newname, use_loadout = FALSE)
-	var/mob/living/spawned_mob = new mob_type(get_turf(src)) //living mobs only
+/obj/effect/mob_spawn/create(mob/mob_possessor, newname, apply_prefs = FALSE) // 自定义修改：与上游生成接口统一角色偏好参数
+	var/mob/living/spawned_mob // 自定义修改：按身体类型选择初始化方式
+	if(ispath(mob_type, /mob/living/carbon/human)) // 自定义修改：仅类人身体接收种族初始化参数
+		spawned_mob = new mob_type(get_turf(src), get_mob_species(mob_possessor, apply_prefs)) // 自定义修改：生成时应用躯壳指定种族，防止魔像成为默认人类
+	else // 自定义修改：保留非类人生物原有初始化方式
+		spawned_mob = new mob_type(get_turf(src)) // 自定义修改：非类人生物不传入种族参数
 	name_mob(spawned_mob, newname)
-	special(spawned_mob, mob_possessor)
+	special(spawned_mob, mob_possessor, apply_prefs) // 自定义修改：将角色偏好参数传递至生成后的特殊初始化
 	// Only run equip logic if this is NOT a ghost_role spawner, as we already solve equip with loadout there.
-	if (!use_loadout)
+	if (!apply_prefs) // 自定义修改：沿用原有装备加载条件，适配统一后的参数名
 		equip(spawned_mob)
 	spawned_mob_ref = WEAKREF(spawned_mob)
 	return spawned_mob
