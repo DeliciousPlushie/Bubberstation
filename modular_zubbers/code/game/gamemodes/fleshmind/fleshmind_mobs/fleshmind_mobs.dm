@@ -1438,7 +1438,7 @@
 
 /mob/living/basic/fleshmind/mechiver/proc/convert_mob(mob/living/mob_to_convert)
 	ai_controller.clear_blackboard_key(BB_MECHIVER_CONTAINED_MOB)
-	log_combat(mob_to_convert, src, "converted", "Merchiver Convert", "[mob_to_convert] has been converted to the fleshmind.")
+	log_combat(mob_to_convert, src, "converted", "Merchiver Convert", "[mob_to_convert]已被转化为血肉心智的一员。")
 	if(ishuman(mob_to_convert))
 		mob_to_convert.AddComponent(/datum/component/human_corruption, incoming_controller = our_controller)
 		mob_to_convert.fully_heal(HEAL_ORGANS|HEAL_REFRESH_ORGANS|HEAL_BLOOD|HEAL_TRAUMAS|HEAL_WOUNDS)

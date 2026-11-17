@@ -1,7 +1,7 @@
 /mob/eye/wire_priest
-	name = "Wirepriest Eye"
-	real_name = "Wirepriest Eye"
-	desc = "The eye of a wirepriest, lurking across the station before coming down."
+	name = "线缆祭司之眼"
+	real_name = "线缆祭司之眼"
+	desc = "线缆祭司的眼睛，在降临前潜行于空间站各处。"
 	icon = 'icons/mob/eyemob.dmi'
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
@@ -33,7 +33,7 @@
 	if(isnull(spawn_turf))
 		spawn_turf = get_turf(src)
 		if(!wireweed_is_valid_turf(spawn_turf)) // If we got one passed in, we force
-			src.balloon_alert(src, "can't spawn here")
+			src.balloon_alert(src, "无法在此生成")
 			return
 	var/obj/structure/fleshmind/structure/core/new_core = new(spawn_turf)
 	if(isnull(mind))
@@ -43,7 +43,7 @@
 	priest_datum.brain_jack = new_core.our_controller
 	mind.transfer_to(priest)
 	priest_datum.on_gain_physical_state()
-	message_admins("[ADMIN_LOOKUPFLW(priest)] has been made into a physical Wire Priest.")
+	message_admins("[ADMIN_LOOKUPFLW(priest)]已化为实体线缆祭司。")
 	qdel(src)
 
 /mob/eye/wire_priest/Move(atom/newloc, direct, glide_size_override, update_dir)

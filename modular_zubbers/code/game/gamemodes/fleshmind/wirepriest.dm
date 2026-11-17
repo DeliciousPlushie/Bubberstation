@@ -96,7 +96,7 @@
 	spawned_mobs += priest
 
 	message_admins("事件将[ADMIN_LOOKUPFLW(priest)]转变为线缆祭司。")
-	priest.log_message("was spawned as a Wire Priest by an event.", LOG_GAME)
+	priest.log_message("由事件生成，身份为线缆祭司。", LOG_GAME)
 
 	return SUCCESSFUL_SPAWN
 

@@ -10,3 +10,13 @@
 		display_choices[chinese_structure_choice_display(choice)] = choice
 	var/selection = tgui_input_list(user, message, title, display_choices)
 	return isnull(selection) ? null : display_choices[selection]
+
+/proc/chinese_fleshmind_mob_choice(mob/user, message, title, list/choices)
+	var/list/display_choices = list()
+	for(var/mob/living/basic/fleshmind/choice as anything in choices)
+		var/label = initial(choice.name) || "[choice]"
+		if(label in display_choices)
+			label = "[label] ([choice])"
+		display_choices[label] = choice
+	var/selection = tgui_input_list(user, message, title, display_choices)
+	return isnull(selection) ? null : display_choices[selection]

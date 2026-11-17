@@ -64,13 +64,13 @@
 /obj/structure/fleshmind/structure/examine(mob/user)
 	. = ..()
 	if(user.has_faction(FACTION_FLESHMIND) && converted_desc)
-		. += span_notice("This item could be examined further...")
+		. += span_notice("可以进一步查看这个物体……")
 
 /obj/structure/fleshmind/structure/examine_more(mob/user)
 	. = ..()
 	if(user.has_faction(FACTION_FLESHMIND) && converted_desc)
 		var/composed_message
-		composed_message = "Being one with the <b>flesh</b> tells you that: <br>"
+		composed_message = "与<b>血肉</b>融为一体让你知晓：<br>"
 		composed_message += converted_desc
 		. += composed_message
 
@@ -280,8 +280,8 @@
 	base_icon_state = "core"
 	density = TRUE
 	max_integrity = 800
-	converted_desc = "This is a Processor Unit of your kernel. Protect it at all costs, it is what provides you life. It can send attackers flying in a pinch, but you shouldn't \
-	let it come to that."
+	converted_desc = "这是你所属内核的处理器单元。它维系着你的生命，务必不惜一切代价保护它。危急时它能将攻击者击飞，但你不该\
+	让局面恶化到那种地步。"
 	/// The controller we create when we are created.
 	var/controller_type = /datum/fleshmind_controller
 	/// Whether the core can attack nearby hostiles as its processing.
@@ -479,7 +479,7 @@
 	icon_state = "antenna"
 	base_icon_state = "antenna"
 	max_integrity = 100
-	converted_desc = "A Babbler sends threatening messages over the radio to crewmembers. You cannot build one unless your kernel has three cores."
+	converted_desc = "呓语者会通过无线电向船员发送威胁信息。你所属的内核至少拥有三个核心时才能建造它。"
 	required_controller_level = CONTROLLER_LEVEL_3 // We don't want the presence announced too soon!
 	automatic_trigger_time_upper = 2 MINUTES
 	automatic_trigger_time_lower = 1.5 MINUTES
@@ -563,7 +563,7 @@
 	icon_state = "head"
 	base_icon_state = "head"
 	max_integrity = 120
-	converted_desc = "A Tormented Head will stun nearby enemies. You cannot build one unless your kernel has two cores."
+	converted_desc = "受难头颅会击晕附近的敌人。你所属的内核至少拥有两个核心时才能建造它。"
 	required_controller_level = CONTROLLER_LEVEL_2
 	activation_range = DEFAULT_VIEW_RANGE
 	ability_cooldown_time = 45 SECONDS
@@ -596,7 +596,7 @@
 	icon_state = "orb"
 	base_icon_state = "orb"
 	max_integrity = 100
-	converted_desc = "A Whisperer sends threatening messages psionically to nearby crewmembers. You cannot build one unless your kernel has two cores."
+	converted_desc = "低语者会通过灵能向附近的船员发送威胁信息。你所属的内核至少拥有两个核心时才能建造它。"
 	required_controller_level = CONTROLLER_LEVEL_2
 	/// Upper timer limit for our ability
 	automatic_trigger_time_upper = 1.5 MINUTES
@@ -651,7 +651,7 @@
 	icon = 'modular_zubbers/icons/fleshmind/fleshmind_machines.dmi'
 	icon_state = "psy"
 	max_integrity = 100
-	converted_desc = "A Psi-Modulator causes nearby crewmembers to suffer from hallucinations. You cannot build one unless your kernel has three cores."
+	converted_desc = "灵能调制器会让附近的船员产生幻觉。你所属的内核至少拥有三个核心时才能建造它。"
 	base_icon_state = "psy"
 	required_controller_level = CONTROLLER_LEVEL_3
 	activation_range = DEFAULT_VIEW_RANGE
@@ -679,7 +679,7 @@
 	base_icon_state = "spawner"
 	density = FALSE
 	max_integrity = 260
-	converted_desc = "An Assembler creates more machines for your army. Unless you plan on fighting alone, it is a good idea to protect these."
+	converted_desc = "组装者会为你的军队制造更多机器。除非你打算孤军奋战，否则最好保护好它们。"
 	activation_range = DEFAULT_VIEW_RANGE
 	ability_cooldown_time = 20 SECONDS
 	automatic_trigger_time_lower = 20 SECONDS
@@ -721,7 +721,7 @@
 	if(!user.can_interact_with(src))
 		return
 
-	var/chosen_override_type = tgui_input_list(user, "选择要指定生成的生物", "指定生物", monster_types)
+	var/chosen_override_type = chinese_fleshmind_mob_choice(user, "选择要指定生成的生物", "指定生物", monster_types)
 
 	if(!chosen_override_type)
 		return
@@ -763,7 +763,7 @@
 	activation_range = DEFAULT_VIEW_RANGE
 	ability_cooldown_time = 3 SECONDS
 	max_integrity = 300
-	converted_desc = "A Spiker shoots neurotoxin at nearby enemies. Useful for if those pesky uninitiated decide to attack your kernel."
+	converted_desc = "射刺者会向附近的敌人发射神经毒素。当那些烦人的未转化者决定攻击你所属的内核时，它就能派上用场。"
 	/// The projectile we fire.
 	var/projectile_type = /obj/projectile/fleshmind_flechette
 
