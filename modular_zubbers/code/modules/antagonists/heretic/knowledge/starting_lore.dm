@@ -13,7 +13,7 @@
 	gain_text = "藏匿的时日已经结束。光投下的阴影太过庞大——我已无处可藏。必须将他们的眼睛缝上。"
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "eldritch_blade"
-	cost = 2
+	cost = 0.5
 
 /datum/heretic_knowledge/enable_blades/can_be_invoked(datum/antagonist/heretic/invoker)
 	return FALSE

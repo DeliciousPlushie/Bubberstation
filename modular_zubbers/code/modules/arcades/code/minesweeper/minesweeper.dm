@@ -19,7 +19,7 @@
 /obj/machinery/computer/arcade/minesweeper
 	name = "扫雷"
 	desc = "一台能生成网格的街机。每次生成网格时，机器都会迸出火花并发出刺耳的尖啸，仿佛承受不住生成网格的强度。"
-	icon_state = "arcade"
+	icon_state = MAP_SWITCH("arcade", "/obj/machinery/computer/arcade")
 	circuit = /obj/item/circuitboard/computer/arcade/minesweeper
 
 	var/datum/minesweeper/board

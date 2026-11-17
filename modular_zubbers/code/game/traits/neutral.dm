@@ -15,27 +15,18 @@
 	if(IS_CHANGELING(holder) || IS_BLOODSUCKER(holder))
 		return
 	holder.ghostize()
-	var/mob/dead/observer/dnr_person = holder.mind.get_ghost(even_if_they_cant_reenter = TRUE)
-	dnr_person.can_reenter_corpse = FALSE
-	holder.med_hud_set_status()
-	dnr_person.stay_dead()
-	dnr_person.log_message("玩家（[key_name(src)]）因特性自动启用了禁止复苏（DNR）。", LOG_GAME, color = COLOR_GREEN, log_globally = FALSE)
-	if(!holder.has_quirk(/datum/quirk/dnr))
-		holder.add_quirk(/datum/quirk/dnr)
-	addtimer(CALLBACK(src, PROC_REF(cleanup), holder), 60 SECONDS)
-	message_admins("[holder]带有禁止复苏特性与元素并已死亡，将在60秒后释放职位名额。")
-
-/datum/element/dnr/proc/cleanup(mob/living/holder) // What if they gib, though?
-	var/datum/job/job_to_free = SSjob.get_job(holder.mind.assigned_role.title)
-	job_to_free.current_positions--
-	holder.log_message("因禁止复苏特性而脱离当前身体——（[holder]）", LOG_GAME, color = COLOR_GREEN)
-	holder.mind = null
+	var/mob/dead/observer/owner_ghost = holder.get_ghost()
+	if(isnull(owner_ghost))
+		return
+	owner_ghost.stay_dead()
+	owner_ghost.log_message("玩家（[key_name(src)]）因特性自动启用了禁止复苏（DNR）。", LOG_GAME, color = COLOR_GREEN, log_globally = FALSE)
 
 /datum/element/dnr/Attach(mob/living/target)
 	. = ..()
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(apply_dnr))
+
 /datum/element/dnr/Detach(mob/living/target, ...)
 	. = ..()
 	UnregisterSignal(target, COMSIG_LIVING_DEATH)

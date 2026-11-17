@@ -1,19 +1,20 @@
 //Disks that let autolathes print upgraded parts!
 /obj/item/disk/design_disk/advanced_parts
 	name = "高级部件自动车床设计磁盘"
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*1.5)
-
-/obj/item/disk/design_disk/advanced_parts/Initialize(mapload)
-	. = ..()
-	blueprints += new /datum/design/adv_capacitor
-	blueprints += new /datum/design/adv_scanning
-	blueprints += new /datum/design/nano_servo
-	blueprints += new /datum/design/high_micro_laser
-	blueprints += new /datum/design/adv_matter_bin
-	blueprints += new /datum/design/super_cell
-	blueprints += new /datum/design/super_battery
-	blueprints += new /datum/design/water_recycler
-	blueprints += new /datum/design/card_reader
+	custom_materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.5
+	)
+	blueprints = list(
+		/datum/design/adv_capacitor,
+		/datum/design/adv_scanning,
+		/datum/design/nano_servo,
+		/datum/design/high_micro_laser,
+		/datum/design/adv_matter_bin,
+		/datum/design/super_cell,
+		/datum/design/super_battery,
+		/datum/design/water_recycler,
+		/datum/design/card_reader,
+	)
 
 /datum/design/adv_capacitor
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
@@ -34,17 +35,21 @@
 
 /obj/item/disk/design_disk/high_tech_parts
 	name = "高科技部件自动车床设计磁盘"
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*1.5, /datum/material/gold = SMALL_MATERIAL_AMOUNT*1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT*1.5)
+	custom_materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.5,
+		/datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.5,
+		/datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5
+	)
 
-/obj/item/disk/design_disk/high_tech_parts/Initialize(mapload)
-	. = ..()
-	blueprints += new /datum/design/super_capacitor
-	blueprints += new /datum/design/phasic_scanning
-	blueprints += new /datum/design/pico_servo
-	blueprints += new /datum/design/ultra_micro_laser
-	blueprints += new /datum/design/super_matter_bin
-	blueprints += new /datum/design/hyper_cell
-	blueprints += new /datum/design/hyper_battery
+	blueprints = list(
+		/datum/design/super_capacitor,
+		/datum/design/phasic_scanning,
+		/datum/design/pico_servo,
+		/datum/design/ultra_micro_laser,
+		/datum/design/super_matter_bin,
+		/datum/design/hyper_cell,
+		/datum/design/hyper_battery,
+	)
 
 /datum/design/super_capacitor
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
@@ -65,7 +70,9 @@
 	name = "高级部件设计磁盘"
 	desc = "一张用于自动车床的磁盘，内含高级部件的设计图。"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*1.5)
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.5
+	)
 	build_path = /obj/item/disk/design_disk/advanced_parts
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
@@ -77,7 +84,11 @@
 	name = "高科技部件设计磁盘"
 	desc = "一张用于自动车床的磁盘，内含高科技部件的设计图。"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*1.5, /datum/material/gold = SMALL_MATERIAL_AMOUNT*1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT*1.5)
+	materials = list(
+	/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.5,
+	/datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.5,
+	/datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5
+	)
 	build_path = /obj/item/disk/design_disk/high_tech_parts
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2 + RND_SUBCATEGORY_STOCK_PARTS_3

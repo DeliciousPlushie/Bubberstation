@@ -55,6 +55,7 @@
 	name = "黑色皮套裤"
 	desc = "咿哈！"
 	icon_state = "chaps"
+	body_parts_covered = NONE
 
 
 /*
