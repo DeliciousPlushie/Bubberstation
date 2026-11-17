@@ -124,3 +124,4 @@
 #include "display/chinese_display.dm"
 #include "../modular_zubbers/code/modules/mob/living/basic/slime/slime_display.dm"
 #include "../modular_zubbers/code/modules/admin/trait_display.dm"
+#include "../modular_zubbers/code/modules/mob/living/navigation_display.dm"
