@@ -484,7 +484,7 @@
 /datum/status_effect/stabilized/grey/tick(seconds_between_ticks)
 	for(var/mob/living/basic/slime/slimes_in_range in range(1, get_turf(owner)))
 		if(!slimes_in_range.has_ally(owner))
-			to_chat(owner, span_notice("[linked_extract] 轻轻脉动，与 [slimes_in_range] 交流。"))
+			to_chat(owner, span_notice("[linked_extract.get_visible_name()] 轻轻脉动，与 [slimes_in_range.get_visible_name()] 交流。"))
 			slimes_in_range.befriend(owner)
 	return ..()
 
@@ -577,7 +577,7 @@
 		if(sheets.len)
 			var/obj/item/stack/sheet/S = pick(sheets)
 			S.add(1)
-			to_chat(owner, span_notice("[linked_extract] 为 [S] 添上一层史莱姆，它变质成了又一叠材料！"))
+			to_chat(owner, span_notice("[linked_extract.get_visible_name()] 为 [S.get_visible_name()] 添上一层史莱姆，使这叠材料多出了一张！"))
 	return ..()
 
 
@@ -625,7 +625,7 @@
 	var/obj/item/item = owner.get_active_held_item()
 	if(item)
 		if(IS_EDIBLE(item) && (item.microwave_act(microwaver = owner) & COMPONENT_MICROWAVE_SUCCESS))
-			to_chat(owner, span_warning("[linked_extract] 骤然亮起，光是你的双手就足以把 [item] 烹熟！"))
+			to_chat(owner, span_warning("[linked_extract.get_visible_name()] 骤然亮起，光是你的双手就足以把 [item.get_visible_name()] 烹熟！"))
 		else
 			item.attackby(fire, owner)
 	return ..()
@@ -645,25 +645,25 @@
 	if(owner.fire_stacks > 0 && prob(80))
 		owner.adjust_wet_stacks(1)
 		if(owner.fire_stacks <= 0)
-			to_chat(owner, span_notice("[linked_extract] 用一层水状黏液裹住你，扑灭了火焰。"))
+			to_chat(owner, span_notice("[linked_extract.get_visible_name()] 用一层水状黏液裹住你，扑灭了火焰。"))
 	var/obj/O = owner.get_active_held_item()
 	if(O)
 		O.extinguish() //All shamelessly copied from water's expose_obj, since I didn't seem to be able to get it here for some reason.
 		O.wash(CLEAN_TYPE_ACID)
 	// Monkey cube
 	if(istype(O, /obj/item/food/monkeycube))
-		to_chat(owner, span_warning("[linked_extract] 让 [O] 膨胀起来！"))
+		to_chat(owner, span_warning("[linked_extract.get_visible_name()] 让 [O.get_visible_name()] 膨胀起来！"))
 		var/obj/item/food/monkeycube/cube = O
 		cube.Expand()
 
 	// Dehydrated carp
 	else if(istype(O, /obj/item/toy/plush/carpplushie/dehy_carp))
-		to_chat(owner, span_warning("[linked_extract] 让 [O] 膨胀起来！"))
+		to_chat(owner, span_warning("[linked_extract.get_visible_name()] 让 [O.get_visible_name()] 膨胀起来！"))
 		var/obj/item/toy/plush/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
 
 	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
-		to_chat(owner, span_warning("[linked_extract] 让 [O] 变得湿透了！"))
+		to_chat(owner, span_warning("[linked_extract.get_visible_name()] 让 [O.get_visible_name()] 变得湿透了！"))
 		var/obj/item/stack/sheet/hairlesshide/HH = O
 		new /obj/item/stack/sheet/wethide(get_turf(HH), HH.amount)
 		qdel(HH)
@@ -708,7 +708,7 @@
 		linked_alert.icon_state = "slime_bluespace_on"
 
 	if(healthcheck && (healthcheck - owner.health) > 5)
-		owner.visible_message(span_warning("[linked_extract] 察觉到 [owner] 身体状况的骤变，随即启动！"))
+		owner.visible_message(span_warning("[linked_extract.get_visible_name()] 察觉到 [owner] 身体状况的骤变，随即启动！"))
 		do_sparks(5,FALSE,owner)
 		var/turf/emergency_turf = find_safe_turf(owner.z, extended_safety_checks = TRUE)
 		var/range = 0
@@ -716,7 +716,7 @@
 			emergency_turf = get_turf(owner)
 			range = 50
 		if(do_teleport(owner, emergency_turf, range, channel = TELEPORT_CHANNEL_BLUESPACE))
-			to_chat(owner, span_notice("[linked_extract] 需要一些时间才能让你在蓝空间轴上重新对齐。"))
+			to_chat(owner, span_notice("[linked_extract.get_visible_name()] 需要一些时间才能让你在蓝空间轴上重新对齐。"))
 			do_sparks(5,FALSE,owner)
 			owner.apply_status_effect(/datum/status_effect/bluespacestabilization)
 	healthcheck = owner.health
@@ -765,14 +765,14 @@
 /datum/status_effect/stabilized/cerulean/tick(seconds_between_ticks)
 	if(owner.stat == DEAD)
 		if(clone && clone.stat != DEAD)
-			owner.visible_message(span_warning("[owner] 迸发出耀眼的光芒，[linked_extract] 把其灵魂卷走了。"),
-				span_notice("你感到 [linked_extract] 传来一阵温暖的辉光，你睁开眼……已身处别处。"))
+			owner.visible_message(span_warning("[owner] 迸发出耀眼的光芒，[linked_extract.get_visible_name()] 把其灵魂卷走了。"),
+				span_notice("你感到 [linked_extract.get_visible_name()] 传来一阵温暖的辉光，你睁开眼……已身处别处。"))
 			if(owner.mind)
 				owner.mind.transfer_to(clone)
 			clone = null
 			qdel(linked_extract)
 		if(!clone || clone.stat == DEAD)
-			to_chat(owner, span_notice("[linked_extract] 拼命想把你的灵魂转移到活着的躯体里，却找不到一个！"))
+			to_chat(owner, span_notice("[linked_extract.get_visible_name()] 拼命想把你的灵魂转移到活着的躯体里，却找不到一个！"))
 			qdel(linked_extract)
 	..()
 
@@ -866,7 +866,7 @@
 /datum/status_effect/stabilized/pink/on_apply()
 	faction_name = FACTION_PINK_EXTRACT(owner)
 	owner.add_ally(faction_name)
-	to_chat(owner, span_notice("[linked_extract] 脉动着，生成一圈脆弱的和平光环。"))
+	to_chat(owner, span_notice("[linked_extract.get_visible_name()] 脉动着，生成一圈脆弱的和平光环。"))
 	return ..()
 
 /datum/status_effect/stabilized/pink/tick(seconds_between_ticks)
@@ -877,7 +877,7 @@
 			owner.remove_ally(faction_name)
 			to_chat(owner, span_userdanger("和平已被打破！敌对生物现在会对你做出反应！"))
 	else if(!owner.has_status_effect(/datum/status_effect/brokenpeace))
-		to_chat(owner, span_notice("[linked_extract] 脉动着，生成一圈脆弱的和平光环。"))
+		to_chat(owner, span_notice("[linked_extract.get_visible_name()] 脉动着，生成一圈脆弱的和平光环。"))
 		owner.add_ally(faction_name)
 	return ..()
 
@@ -1016,7 +1016,7 @@
 /datum/status_effect/stabilized/lightpink/tick(seconds_between_ticks)
 	for(var/mob/living/carbon/human/H in range(1, get_turf(owner)))
 		if(H != owner && H.stat != DEAD && H.health <= 0 && !H.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
-			to_chat(owner, "[linked_extract] 与 [H] 的心跳同频脉动，努力维持其生命。")
+			to_chat(owner, "[linked_extract.get_visible_name()] 与 [H] 的心跳同频脉动，努力维持其生命。")
 			H.reagents.add_reagent(/datum/reagent/medicine/epinephrine,5)
 	return ..()
 

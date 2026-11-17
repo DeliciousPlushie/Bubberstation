@@ -303,9 +303,9 @@
 		if(prob(stunprob) && our_slime.powerlevel >= SLIME_EXTRA_SHOCK_COST)
 			our_slime.adjust_power_level(-SLIME_EXTRA_SHOCK_COST)
 			borg_target.apply_damage(our_slime.powerlevel * rand(6, 10), BRUTE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
-			borg_target.visible_message(span_danger("\The [our_slime] 电击了 [borg_target]！"), span_userdanger("\The [our_slime] 电击了你！"))
+			borg_target.visible_message(span_danger("[our_slime.get_visible_name()] 电击了 [borg_target]！"), span_userdanger("[our_slime.get_visible_name()] 电击了你！"))
 		else
-			borg_target.visible_message(span_danger("\The [our_slime] 没能伤到 [borg_target]！"), span_userdanger("\The [our_slime] 没能伤到你！"))
+			borg_target.visible_message(span_danger("[our_slime.get_visible_name()] 没能伤到 [borg_target]！"), span_userdanger("[our_slime.get_visible_name()] 没能伤到你！"))
 
 		return COMPONENT_HOSTILE_NO_ATTACK
 
@@ -315,7 +315,7 @@
 		if(!prob(stunprob))
 			return NONE // normal attack
 
-		carbon_target.visible_message(span_danger("\The [our_slime] 电击了 [carbon_target]！"), span_userdanger("\The [our_slime] 电击了你！"))
+		carbon_target.visible_message(span_danger("[our_slime.get_visible_name()] 电击了 [carbon_target]！"), span_userdanger("[our_slime.get_visible_name()] 电击了你！"))
 
 		do_sparks(5, TRUE, carbon_target)
 		var/power = our_slime.powerlevel + rand(0,3)
@@ -332,8 +332,8 @@
 		var/mob/living/basic/slime/target_slime = target
 		if(target_slime.buckled)
 			target_slime.stop_feeding(silent = TRUE)
-			visible_message(span_danger("[our_slime] 把 [target_slime] 拽了下来！"), \
-				span_danger("你把 [target_slime] 拽了下来！"))
+			visible_message(span_danger("[our_slime.get_visible_name()] 把 [target_slime.get_visible_name()] 拽了下来！"), \
+				span_danger("你把 [target_slime.get_visible_name()] 拽了下来！"))
 			return NONE // normal attack
 
 		var/is_adult_slime = our_slime.life_stage == SLIME_LIFE_STAGE_ADULT
@@ -348,7 +348,7 @@
 ///Spawns a crossed slimecore item
 /mob/living/basic/slime/proc/spawn_corecross()
 	var/static/list/crossbreeds = subtypesof(/obj/item/slimecross)
-	visible_message(span_danger("[src] 剧烈颤抖起来，变异的核正在吞食它剩下的身体！"))
+	visible_message(span_danger("[get_visible_name()] 剧烈颤抖起来，变异的核正在吞食它剩下的身体！"))
 	playsound(src, 'sound/effects/magic/smoke.ogg', 50, TRUE)
 	var/selected_crossbreed_path
 	for(var/crossbreed_path in crossbreeds)

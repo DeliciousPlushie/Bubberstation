@@ -107,7 +107,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "玩家游戏时长", "查看玩
 	if(!check_rights(R_VAREDIT))
 		return
 
-	var/add_or_remove = input("移除/添加？", "特质移除/添加") as null|anything in list("Add","Remove")
+	var/add_or_remove = chinese_admin_trait_option_choice(usr, "移除/添加？", "特质移除/添加", list("Add","Remove"))
 	if(!add_or_remove)
 		return
 	var/list/available_traits = list()
@@ -124,7 +124,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "玩家游戏时长", "查看玩
 				var/name = GLOB.admin_trait_name_map[trait] || trait
 				available_traits[name] = trait
 
-	var/chosen_trait = input("选择要修改的特质", "特质") as null|anything in sort_list(available_traits)
+	var/chosen_trait = chinese_admin_trait_choice(usr, "选择要修改的特质", "特质", available_traits)
 	if(!chosen_trait)
 		return
 	chosen_trait = available_traits[chosen_trait]
@@ -136,14 +136,14 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "玩家游戏时长", "查看玩
 				D.AddElement(/datum/element/movetype_handler)
 			ADD_TRAIT(D,chosen_trait,source)
 		if("Remove")
-			var/specific = input("所有来源还是特定来源？", "特质移除/添加") as null|anything in list("All","Specific")
+			var/specific = chinese_admin_trait_option_choice(usr, "所有来源还是特定来源？", "特质移除/添加", list("All","Specific"))
 			if(!specific)
 				return
 			switch(specific)
 				if("All")
 					source = null
 				if("Specific")
-					source = input("要移除的来源","特质移除/添加") as null|anything in sort_list(GET_TRAIT_SOURCES(D, chosen_trait))
+					source = chinese_admin_trait_source_choice(usr, "要移除的来源","特质移除/添加", GET_TRAIT_SOURCES(D, chosen_trait))
 					if(!source)
 						return
 			REMOVE_TRAIT(D,chosen_trait,source)
@@ -152,7 +152,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "玩家游戏时长", "查看玩
 
 ADMIN_VERB(drop_everything, R_ADMIN, "丢弃所有物品", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
 	VERB_ARG_TYPED(dropee, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob/living)
-	var/confirm = tgui_alert(user, "要让 [dropee] 丢弃所有物品吗？", "消息", list("Yes", "No"))
+	var/confirm = chinese_tgui_alert_display(user, "要让 [dropee] 丢弃所有物品吗？", "消息", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 

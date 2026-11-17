@@ -17,7 +17,7 @@ Self-sustaining extracts:
 //Just divides into the actual item.
 /obj/item/slimecross/selfsustaining/Initialize(mapload)
 	..()
-	visible_message(span_warning("[src] 颤抖起来，分裂成四份更小的提取物。"))
+	visible_message(span_warning("[get_visible_name()] 颤抖起来，分裂成四份更小的提取物。"))
 	for(var/i in 1 to 4)
 		var/obj/item/autoslime/A = new /obj/item/autoslime(src.loc)
 		var/obj/item/slime_extract/X = new extract_type(A)
@@ -44,7 +44,7 @@ Self-sustaining extracts:
 		var/choice = english_list(req_chem_names, and_text = ", ")
 		choices[choice] = recipe
 
-	var/selectName = tgui_input_list(user, "提取物将生成的试剂。", "自维持反应", choices)
+	var/selectName = chinese_autoslime_reaction_choice(user, choices)
 	if(isnull(selectName))
 		return
 

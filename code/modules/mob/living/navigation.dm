@@ -48,7 +48,7 @@ GAME_VERB_HIDDEN(/mob/living, navigate, "Navigate")
 		balloon_alert(src, "没有导航信号！")
 		return
 
-	var/platform_code = tgui_input_list(src, "选择地点", "导航", sort_list(destination_list))
+	var/platform_code = chinese_navigation_destination_choice(src, destination_list)
 	var/atom/navigate_target = destination_list[platform_code]
 	create_navigation_line(navigate_target)
 

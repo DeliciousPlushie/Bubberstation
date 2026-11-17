@@ -1186,9 +1186,9 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 	if(last_force_string_check != force && !(item_flags & FORCE_STRING_OVERRIDE))
 		set_force_string()
 	if(!(item_flags & FORCE_STRING_OVERRIDE))
-		openToolTip(user,src,params,title = name,content = "[desc]<br>[force ? "<b>攻击力：</b> [force_string]" : ""]",theme = "")
+		openToolTip(user,src,params,title = chinese_hover_name(),content = "[desc]<br>[force ? "<b>攻击力：</b> [force_string]" : ""]",theme = "")
 	else
-		openToolTip(user,src,params,title = name,content = "[desc]<br><b>攻击力：</b> [force_string]",theme = "")
+		openToolTip(user,src,params,title = chinese_hover_name(),content = "[desc]<br><b>攻击力：</b> [force_string]",theme = "")
 
 /obj/item/MouseEntered(location, control, params)
 	. = ..()

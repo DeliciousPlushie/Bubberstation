@@ -17,7 +17,7 @@ Recurring extracts:
 /obj/item/slimecross/recurring/Initialize(mapload)
 	. = ..()
 	extract = new extract_type(src.loc)
-	visible_message(span_notice("[src] 在自己周围裹上了一层黏液！"))
+	visible_message(span_notice("[get_visible_name()] 在自己周围裹上了一层黏液！"))
 	extract.name = name
 	extract.desc = desc
 	extract.icon = icon
@@ -34,7 +34,7 @@ Recurring extracts:
 		extract.extract_uses++
 		cooldown = max_cooldown
 	else if(extract.extract_uses <= 0)
-		extract.visible_message(span_warning("[extract] 内部的光芒闪烁几下，熄灭了。"))
+		extract.visible_message(span_warning("[extract.get_visible_name()] 内部的光芒闪烁几下，熄灭了。"))
 		extract.desc = "一枚微小的、失去活性的核心，渗出深青色的黏液。"
 		extract.icon_state = "prismatic"
 		qdel(src)
