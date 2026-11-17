@@ -28,7 +28,7 @@
 
 /proc/slime_scan(mob/living/basic/slime/scanned_slime, mob/living/user)
 	var/to_render = "<b>史莱姆扫描结果：</b>\
-					\n[span_notice("[chinese_color_display(scanned_slime.slime_type.colour)][scanned_slime.life_stage == SLIME_LIFE_STAGE_ADULT ? "成年" : "幼年"]史莱姆")]\
+					\n[span_notice("[chinese_slime_color_display(scanned_slime.slime_type.colour)][scanned_slime.life_stage == SLIME_LIFE_STAGE_ADULT ? "成年" : "幼年"]史莱姆")]\
 					\n营养：[scanned_slime.nutrition]/[SLIME_MAX_NUTRITION]"
 
 	if (scanned_slime.nutrition < SLIME_STARVE_NUTRITION)
@@ -41,7 +41,7 @@
 	to_render += "\n可能的突变："
 	var/list/mutation_text = list()
 	for(var/datum/slime_type/key as anything in scanned_slime.slime_type.mutations)
-		mutation_text += chinese_color_display(initial(key.colour))
+		mutation_text += chinese_slime_color_display(initial(key.colour))
 
 	if(!mutation_text.len)
 		to_render += "未检测到。"

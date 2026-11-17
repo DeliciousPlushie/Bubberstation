@@ -13,12 +13,12 @@
 		return
 
 	if(buckled == attacker ? prob(60) : prob(30)) //its easier to remove the slime from yourself
-		attacker.visible_message(span_warning("[attacker] 试图把 \the [defender_slime.name] 从 [buckled == attacker ? "" : buckled] 身上拽下来！"), \
-		span_danger("[buckled == attacker ? "你试图" : "[attacker] 试图" ]把 \the [defender_slime.name] 从 [buckled == attacker ? "" : buckled] 身上拽下来！"))
+		attacker.visible_message(span_warning("[attacker] 试图把 [defender_slime.get_visible_name()] 从 [buckled == attacker ? "" : buckled] 身上拽下来！"), \
+		span_danger("[buckled == attacker ? "你试图" : "[attacker] 试图" ]把 [defender_slime.get_visible_name()] 从 [buckled == attacker ? "" : buckled] 身上拽下来！"))
 		playsound(loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 		return
 
-	attacker.visible_message(span_warning("[attacker] 成功把 \the [defender_slime.name] 拽了下来！"), span_notice("你成功把 \the [defender_slime.name] 拽了下来！"))
+	attacker.visible_message(span_warning("[attacker] 成功把 [defender_slime.get_visible_name()] 拽了下来！"), span_notice("你成功把 [defender_slime.get_visible_name()] 拽了下来！"))
 	playsound(loc, 'sound/items/weapons/shove.ogg', 50, TRUE, -1)
 
 	defender_slime.discipline_slime()
@@ -52,7 +52,7 @@
 
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
-	to_chat(user, span_danger("[attacking_item] 直接从 [src] 身上穿了过去！"))
+	to_chat(user, span_danger("[attacking_item] 直接从 [get_visible_name()] 身上穿了过去！"))
 	return TRUE
 
 ///Attempts to use the item to discipline the unruly slime

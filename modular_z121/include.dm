@@ -122,3 +122,4 @@
 #include "code/modules/workbenches/recipe.dm"
 #include "code/modules/workbenches/workbenches.dm"
 #include "display/chinese_display.dm"
+#include "../modular_zubbers/code/modules/mob/living/basic/slime/slime_display.dm"

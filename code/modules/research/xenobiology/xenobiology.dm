@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(do_after(user, 4 SECONDS, target = user))
 				var/mob/living/basic/slime/new_slime = new(get_turf(user), /datum/slime_type/grey)
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-				to_chat(user, span_notice("你吐出了 [new_slime]。"))
+				to_chat(user, span_notice("你吐出了 [new_slime.get_visible_name()]。"))
 				return 350
 			else
 				return 0
@@ -354,7 +354,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			user.visible_message(span_warning("[user] 的皮肤短暂地泛起红光……"), span_warning("你的皮肤泛起红光，释放出诱发狂暴的信息素……"))
 			for(var/mob/living/basic/slime/slime in viewers(get_turf(user), null))
 				slime.ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE)
-				slime.visible_message(span_danger("[slime] 陷入了狂暴！"))
+				slime.visible_message(span_danger("[slime.get_visible_name()] 陷入了狂暴！"))
 			return 600
 
 /obj/item/slime_extract/blue

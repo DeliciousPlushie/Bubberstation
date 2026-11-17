@@ -68,8 +68,8 @@
 		layer = MOB_ABOVE_PIGGYBACK_LAYER //appear above the target mob
 		target_mob.apply_status_effect(/datum/status_effect/slime_leech, src)
 		target_mob.visible_message(
-			span_danger("[name] 死死吸附住了 [target_mob]！"),
-			span_userdanger("[name] 死死吸附住了 [target_mob]！"),
+			span_danger("[get_visible_name()] 死死吸附住了 [target_mob]！"),
+			span_userdanger("[get_visible_name()] 死死吸附住了 [target_mob]！"),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 		to_chat(src, span_notice("<i>我开始吸取 [target_mob] 的生命能量……</i>"))
@@ -83,7 +83,7 @@
 		return
 
 	if(!silent)
-		visible_message(span_warning("[src] 松开了 [buckled]！"), span_notice("你松开了 [buckled]"))
+		visible_message(span_warning("[get_visible_name()] 松开了 [buckled]！"), span_notice("你松开了 [buckled]"))
 		balloon_alert(src, "停止进食")
 	remove_offsets(FEEDING_OFFSET)
 	layer = initial(layer)
