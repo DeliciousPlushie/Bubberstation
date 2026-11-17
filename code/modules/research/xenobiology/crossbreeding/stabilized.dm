@@ -153,21 +153,21 @@ Stabilized extracts:
 		if(L.has_status_effect(/datum/status_effect/stabilized/gold))
 			L.remove_status_effect(/datum/status_effect/stabilized/gold)
 	if(choice == "魔宠位置")
-		to_chat(user, span_notice("你戳了戳 [src]，它微微颤抖。"))
+		to_chat(user, span_notice("你戳了戳 [get_visible_name()]，它微微颤抖。"))
 		START_PROCESSING(SSobj, src)
 	if(choice == "魔宠物种")
-		to_chat(user, span_notice("你捏了捏 [src]，里面似乎有什么形状在变化。"))
+		to_chat(user, span_notice("你捏了捏 [get_visible_name()]，里面似乎有什么形状在变化。"))
 		generate_mobtype()
 		START_PROCESSING(SSobj, src)
 	if(choice == "魔宠智慧")
-		to_chat(user, span_notice("你碰了碰 [src]，它释放出一阵发光的脉冲。"))
+		to_chat(user, span_notice("你碰了碰 [get_visible_name()]，它释放出一阵发光的脉冲。"))
 		saved_mind = null
 		START_PROCESSING(SSobj, src)
 	if(choice == "魔宠名称")
 		var/newname = sanitize_name(tgui_input_text(user, "你想更改 [mob_name] 的名字吗？", "更改名称", mob_name, MAX_NAME_LEN))
 		if(newname)
 			mob_name = newname
-		to_chat(user, span_notice("你对着 [src] 轻声低语，它微微晃动作为回应。"))
+		to_chat(user, span_notice("你对着 [get_visible_name()] 轻声低语，它微微晃动作为回应。"))
 		START_PROCESSING(SSobj, src)
 
 /obj/item/slimecross/stabilized/oil
@@ -197,10 +197,10 @@ Stabilized extracts:
 		return NONE
 
 	if(regencore)
-		to_chat(user, span_warning("[src] 中已经装入了一个再生杂交提取物！"))
+		to_chat(user, span_warning("[get_visible_name()] 中已经装入了一个再生杂交提取物！"))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("你把 [tool] 放入 [src]，让提取物准备好自动施用！"))
+	to_chat(user, span_notice("你把 [tool.get_visible_name()] 放入 [get_visible_name()]，让提取物准备好自动施用！"))
 	regencore = tool
 	tool.forceMove(src)
 	return ITEM_INTERACT_SUCCESS

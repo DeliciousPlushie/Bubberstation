@@ -84,3 +84,7 @@
 #include "labels/species_names.dm"
 #include "labels/reagent_names.dm"
 #include "labels/fish.dm"
+#include "labels/cargo_crate_display.dm"
+#include "labels/slime_display.dm"
+#include "labels/trait_display.dm"
+#include "labels/navigation_display.dm"
