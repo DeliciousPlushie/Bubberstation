@@ -494,6 +494,12 @@
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 	storage_type = /datum/storage/knifethrowers
 
+/obj/item/storage/belt/sheath/hip_only/knifethrowers_belt/update_icon_state() // 自定义修改：单独修复飞刀腰带继承剑鞘满载图标的问题
+	. = ..() // 自定义修改：保留父类图标更新及返回值
+	icon_state = initial(icon_state) // 自定义修改：恢复存在的腰带底图，刀具数量由叠加图显示
+	inhand_icon_state = initial(inhand_icon_state) // 自定义修改：避免手持图标引用不存在的 utility-full 状态
+	worn_icon_state = initial(worn_icon_state) // 自定义修改：避免穿戴图标引用不存在的 utility-full 状态
+
 /obj/item/storage/belt/sheath/hip_only/knifethrowers_belt/update_overlays()
 	. = ..()
 	if(contents.len > 0)
