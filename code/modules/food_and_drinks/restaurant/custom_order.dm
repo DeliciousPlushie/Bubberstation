@@ -107,10 +107,10 @@
 
 	var/list/unique_list = unique_list(wanted_flavors)
 	if(wanted_flavors.len > 1 && length(unique_list) == 1)
-		icecream_name = "[make_tuple(wanted_flavors.len)] [wanted_flavors[1]] 冰淇淋（[initial(cone_type.name)]）"
+		icecream_name = "[wanted_flavors.len] 球[chinese_icecream_display(wanted_flavors[1])]冰淇淋（[initial(cone_type.name)]）"
 	else
 		sortTim(wanted_flavors, cmp = GLOBAL_PROC_REF(cmp_text_asc))
-		icecream_name = "[english_list(wanted_flavors)] 冰淇淋（[initial(cone_type.name)]）"
+		icecream_name = "[chinese_icecream_list_display(wanted_flavors)]冰淇淋（[initial(cone_type.name)]）"
 
 /datum/custom_order/icecream/get_order_line(datum/venue/our_venue)
 	return "我要一份 [icecream_name]"
@@ -143,7 +143,7 @@
 	src.reagent_type = reagent_type
 
 /datum/custom_order/reagent/get_order_line(datum/venue/our_venue)
-	return "我要 [reagents_needed]u 的 [initial(reagent_type.name)]"
+	return "我要 [reagents_needed]u 的 [chinese_reagent_display(initial(reagent_type.name))]"
 
 /datum/custom_order/reagent/get_order_appearance(datum/venue/our_venue)
 	var/image/food_image = image(icon = 'icons/effects/effects.dmi' , icon_state = "thought_bubble")
@@ -211,7 +211,7 @@
 	reagents_needed = serving_sizes[picked_serving]
 
 /datum/custom_order/reagent/soup/get_order_line(datum/venue/our_venue)
-	return "我要一份 [picked_serving] 的 [initial(reagent_type.name)]"
+	return "我要一份 [picked_serving] 的 [chinese_reagent_display(initial(reagent_type.name))]"
 
 /datum/custom_order/reagent/soup/handle_get_order(mob/living/basic/robot_customer/customer_pawn, obj/item/order_item)
 	customer_pawn.visible_message(
