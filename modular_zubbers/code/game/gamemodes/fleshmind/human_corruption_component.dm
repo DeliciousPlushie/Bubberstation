@@ -84,7 +84,7 @@
 		REMOVE_TRAIT(parent_mob, trait, "fleshmind")
 	parent_mob.remove_filter("corruption_glow")
 	parent_mob.update_appearance()
-	log_combat(parent_mob, null, "deconverted", "deconverted message", "[parent_mob] has been deconverted from the fleshmind")
+	log_combat(parent_mob, null, "deconverted", "deconverted message", "[parent_mob]已解除血肉心智转化状态")
 	if(our_controller && parent_mob.client)
 		LAZYREMOVE(our_controller.infected_crew, parent_mob)
 	for(var/datum/antagonist/wire_priest/priest in parent_mob.mind.antag_datums)

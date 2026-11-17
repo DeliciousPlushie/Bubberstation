@@ -2,6 +2,7 @@
 	var/static/list/names
 	if(isnull(names))
 		names = list(
+			"Spawn Wire Priest" = "生成线缆祭司", "Wirepriest Eye" = "线缆祭司之眼", "Wirepriest eye" = "线缆祭司之眼",
 			"local" = "本地", "direct" = "直接播放", "radius" = "半径范围", "zlevel" = "同一Z层", "global" = "全局",
 			"SECOND" = "秒", "MINUTE" = "分钟", "HOUR" = "小时", "DAY" = "天", "WEEK" = "周", "MONTH" = "个月", "YEAR" = "年",
 			"Key" = "账号", "Ban Location" = "封禁范围", "Applies to admins" = "适用于管理员", "Duration" = "时长", "Reason" = "原因",

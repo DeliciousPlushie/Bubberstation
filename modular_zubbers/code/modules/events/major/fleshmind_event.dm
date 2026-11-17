@@ -18,7 +18,7 @@
 	priority_announce("确认 [station_name()] 发生机密级生物危害爆发。空间站隔离子程序已启动。", "紧急生物危害警报", ANNOUNCER_MUTANTS)
 
 /datum/round_event/fleshmind/start()
-	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_WIRE_PRIEST, role = ROLE_WIRE_PRIEST, role_name_text = "Wirepriest eye", amount_to_pick = 1, alert_pic = /obj/structure/fleshmind/structure/core)
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_WIRE_PRIEST, role = ROLE_WIRE_PRIEST, role_name_text = "线缆祭司之眼", amount_to_pick = 1, alert_pic = /obj/structure/fleshmind/structure/core)
 	if(isnull(chosen_one))
 		return fallback_spawn() // Fallback raw spawning
 	var/mob/eye/wire_priest/new_priest = new(get_random_station_turf())

@@ -10,8 +10,8 @@
 	closeToolTip(usr)
 
 /atom/movable/screen/wire_priest/spawn_core
-	name = "Deploy core"
-	desc = "Places down the wireweed core, and you with it."
+	name = "部署核心"
+	desc = "放置线缆蔓核心，并让你在同一位置现身。"
 	icon_state = "summon"
 	screen_loc = "CENTER:0,SOUTH:5"
 
