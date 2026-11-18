@@ -74,7 +74,7 @@
 	if(istext(x) && compare && x != compare) // Was changed
 		x = sanitize(x)
 		if(isnotpretty(x)) // Pretty filter stuff
-			var/log_message = "An NTSL script just tripped the pretty filter, setting variable [name] from [compare] to value [x]!"
+			var/log_message = "NTSL 脚本触发了文本过滤器：尝试将变量 [name] 从 [compare] 改为 [x]！"
 			message_admins(log_message)
 			logger.Log(LOG_CATEGORY_NTSL, "[key_name(src)] [log_message] [loc_name(src)]")
 			return FALSE

@@ -103,7 +103,7 @@
 	var/datum/ntsl_node/expression/expression_operator/operator_object = opr.Pop()
 	if(!operator_object) return
 	if(!istype(operator_object))
-		errors += new /datum/scriptError("Error reducing expression - invalid operator.")
+		errors += new /datum/scriptError("表达式归约失败：无效的运算符。")
 		return
 	//Take O and assign its operands, popping one or two values from the val stack
 	//depending on whether O is a binary or unary operator.
@@ -160,7 +160,7 @@
 	while(TRUE)
 		loop++
 		if(loop > 800)
-			errors += new /datum/scriptError("Too many nested tokens.")
+			errors += new /datum/scriptError("词元嵌套层数过多。")
 			return
 
 		if(EndOfExpression(end))
@@ -186,7 +186,7 @@
 				expecting = OPERATOR
 		else if(istype(curToken, /datum/token/symbol) && curToken.value == "." && ntok && istype(ntok, /datum/token/word))
 			if(expecting == VALUE)
-				errors += new /datum/scriptError/ExpectedToken("expression", curToken)
+				errors += new /datum/scriptError/ExpectedToken("表达式", curToken)
 				NextToken()
 				continue
 			var/datum/ntsl_node/expression/member/dot/E = new(curToken)
@@ -196,7 +196,7 @@
 			val.Push(E)
 		else if(istype(curToken, /datum/token/symbol) && curToken.value == "\[")
 			if(expecting == VALUE)
-				errors += new /datum/scriptError/ExpectedToken("expression", curToken)
+				errors += new /datum/scriptError/ExpectedToken("表达式", curToken)
 				NextToken()
 				continue
 			var/datum/ntsl_node/expression/member/brackets/B = new(curToken)
@@ -209,13 +209,13 @@
 			if(expecting == OPERATOR)
 				curOperator = GetBinaryOperator(curToken)
 				if(!curOperator)
-					errors += new /datum/scriptError/ExpectedToken("operator", curToken)
+					errors += new /datum/scriptError/ExpectedToken("运算符", curToken)
 					NextToken()
 					continue
 			else
 				curOperator = GetUnaryOperator(curToken)
 				if(!curOperator) //given symbol isn't a unary operator
-					errors += new /datum/scriptError/ExpectedToken("expression", curToken)
+					errors += new /datum/scriptError/ExpectedToken("表达式", curToken)
 					NextToken()
 					continue
 
@@ -241,7 +241,7 @@
 			continue
 		else
 			if(expecting != VALUE)
-				errors += new /datum/scriptError/ExpectedToken("operator", curToken)
+				errors += new /datum/scriptError/ExpectedToken("运算符", curToken)
 				NextToken()
 				continue
 			val.Push(GetExpression(curToken))
@@ -254,7 +254,7 @@
 	. = val.Pop() //Return what should be the last value on the stack
 	if(val.Top())
 		var/datum/ntsl_node/node = val.Pop()
-		errors += new /datum/scriptError("Error parsing expression. Unexpected value left on stack: [node.ToString()].")
+		errors += new /datum/scriptError("表达式解析失败，栈中还有意外的值：[node.ToString()]。")
 		return null
 
 ///Parses a function call inside of an expression. (See also <ParseExpression()>)
@@ -267,7 +267,7 @@
 	while(TRUE)
 		loops++
 		if(loops >= 800)
-			errors += new /datum/scriptError("Too many nested expressions.")
+			errors += new /datum/scriptError("表达式嵌套层数过多。")
 			break
 			//CRASH("Something TERRIBLE has gone wrong in ParseFunctionExpression ;__;")
 
@@ -291,7 +291,7 @@
 	while(TRUE)
 		loops++
 		if(loops >= 800)
-			errors += new /datum/scriptError("Too many nested expressions.")
+			errors += new /datum/scriptError("表达式嵌套层数过多。")
 			break
 
 		if(istype(curToken, /datum/token/symbol) && curToken.value == ")")

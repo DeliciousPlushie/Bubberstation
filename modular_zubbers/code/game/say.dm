@@ -1,4 +1,4 @@
-/atom/movable/proc/get_alt_name()
+/atom/movable/proc/get_alt_name(for_display = FALSE)
 	return
 
 /atom/movable/virtualspeaker

@@ -14,7 +14,7 @@ import {
 import { AceEditor } from '../bubber_components/ACE/Editor';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
-
+import { radioDisplay } from './common/radioDisplay';
 // NTSLTextArea component start
 // This is literally just TextArea but without ENTER updating anything, for NTSL
 
@@ -58,7 +58,7 @@ export const NTSLCoding = (props) => {
   const [tabIndex, setTabIndex] = useState(1);
 
   return (
-    <Window title="Traffic Control Console" width={winWidth} height={winHeight}>
+    <Window title="电信流量控制台" width={winWidth} height={winHeight}>
       <Window.Content>
         <Stack fill>
           {user_name && (
@@ -73,7 +73,7 @@ export const NTSLCoding = (props) => {
                 color="red"
                 onClick={() => act('admin_reset')}
               >
-                !(ADMIN) reset code and compile!
+                管理员：重置代码并重新编译
               </Button>
             ) : (
               ''
@@ -88,7 +88,7 @@ export const NTSLCoding = (props) => {
                       disabled={emagged}
                       onClick={() => act('log_out')}
                     >
-                      Log Out
+                      退出登录
                     </Button>
                   </Stack.Item>
                   <Stack.Item verticalAlign="middle">{user_name}</Stack.Item>
@@ -99,7 +99,7 @@ export const NTSLCoding = (props) => {
                   color="green"
                   onClick={() => act('log_in')}
                 >
-                  Log In
+                  登录
                 </Button>
               )}
             </Section>
@@ -110,25 +110,25 @@ export const NTSLCoding = (props) => {
                     selected={tabIndex === 1}
                     onClick={() => setTabIndex(1)}
                   >
-                    Compile
+                    编译
                   </Tabs.Tab>
                   <Tabs.Tab
                     selected={tabIndex === 2}
                     onClick={() => setTabIndex(2)}
                   >
-                    Network
+                    网络
                   </Tabs.Tab>
                   <Tabs.Tab
                     selected={tabIndex === 3}
                     onClick={() => setTabIndex(3)}
                   >
-                    Logs
+                    日志
                   </Tabs.Tab>
                   <Tabs.Tab
                     selected={tabIndex === 4}
                     onClick={() => setTabIndex(4)}
                   >
-                    Reference
+                    参考
                   </Tabs.Tab>
                 </Tabs>
                 {tabIndex === 1 && (
@@ -190,11 +190,11 @@ const CompilerOutput = (props: NTSLTextAreaProps) => {
           icon="save"
           disabled={ntslCode === ''}
           tooltip={
-            'Must be done before compiling! (Hint: Ctrl-S in the editor to save)'
+            '编译前请先保存。在编辑器中按 Ctrl-S 即可保存。'
           }
           onClick={() => act('save_code', { saved_code: ntslCode })}
         >
-          Save
+          保存
         </Button>
       </Box>
       <Box>
@@ -202,9 +202,9 @@ const CompilerOutput = (props: NTSLTextAreaProps) => {
           mb={1}
           icon="running"
           onClick={() => act('compile_code')}
-          tooltip={'Hint: Ctrl-Shift-B in the editor to save & compile'}
+          tooltip={'在编辑器中按 Ctrl-Shift-B 即可保存并编译。'}
         >
-          Compile & Run
+          编译并运行
         </Button>
       </Box>
       <Divider />
@@ -213,7 +213,7 @@ const CompilerOutput = (props: NTSLTextAreaProps) => {
           ? compiler_output.map((error_message, index) => (
               <Box key={index}>{error_message}</Box>
             ))
-          : 'No compile errors.'}
+          : '没有编译错误。'}
       </Section>
     </>
   );
@@ -226,7 +226,7 @@ const ServerList = (props) => {
     <>
       <Box>
         <Button mb={1} icon="sync" onClick={() => act('refresh_servers')}>
-          Reconnect to Network
+          重新连接网络
         </Button>
       </Box>
       <Box>
@@ -270,7 +270,7 @@ const LogViewer = (props) => {
     <>
       <Box>
         <Button mb={1} icon="trash" onClick={() => act('clear_logs')}>
-          Clear Logs
+          清空日志
         </Button>
       </Box>
       <Divider />
@@ -279,7 +279,7 @@ const LogViewer = (props) => {
           ? access_log.map((access_message, index) => (
               <Box key={index}>{access_message}</Box>
             ))
-          : 'Access log could not be found. Please contact an administrator.'}
+          : '找不到访问日志，请联系管理员。'}
       </Section>
     </>
   );
@@ -298,71 +298,71 @@ const blacklistedChannels = [
 const Guide = (props) => {
   return (
     <Section fill scrollable height="95.5%">
-      NT Recognized Frequencies: <br />
-      (var = channels.channel_name) <br />
+      纳米传讯认可的频率 <br />
+      例如：channels.common <br />
       {RADIO_CHANNELS.filter(
         (channel) => !blacklistedChannels.includes(channel.name),
       ).map((channel, index) => (
         <div key={index} style={{ color: channel.color }}>
-          {channel.name}: {channel.freq}
+          {radioDisplay(channel.name)}：{channel.freq}
         </div>
       ))}
       <br />
-      Signal flags
+      信号字段
       <br />
-      source: Name of person.
+      source：发言者姓名。
       <br />
-      content: Message being said.
+      content：发言内容。
       <br />
-      job: Job of the person.
+      job：发言者的职业。
       <br />
-      freq: See NT Recognized Frequencies.
+      freq：频道频率，见上方频率表。
       <br />
-      pass: Boolean, whether message will go through.
+      pass：布尔值，决定是否放行消息。
       <br />
-      say: Say verb of the person.
+      say：陈述时使用的动词。
       <br />
-      ask: Ask verb of the person.
+      ask：提问时使用的动词。
       <br />
-      yell: Yell verb of the person.
+      yell：喊叫时使用的动词。
       <br />
-      exclaim: Exclaim verb of the person.
+      exclaim：惊呼时使用的动词。
       <br />
-      filters: See Radio Filters.
+      filters：见下方无线电滤镜。
       <br />
-      language: See Readable Languages.
+      language：见下方支持的语言。
       <br />
       <br />
-      NT radio filters: <br />
-      (var = filter_types.filter_name) <br /># fonts <br />
-      &quot;robot&quot; (robot) <br />
-      &quot;sans&quot; (wacky) <br /># manipulation <br />
-      <i>&quot;italics&quot; (emphasis)</i> <br />
-      <b>&quot;yell&quot; (loud)</b> <br />
-      &quot;command_headset&quot; (commanding) <br />
+      纳米传讯无线电滤镜 <br />
+      用法示例：filter_types.robot <br />字体 <br />
+      robot：机械音（&quot;robot&quot;） <br />
+      wacky：滑稽（&quot;sans&quot;） <br />文字效果 <br />
+      <i>emphasis：强调（&quot;italics&quot;）</i> <br />
+      <b>loud：大喊（&quot;yell&quot;）</b> <br />
+      commanding：指挥口吻（&quot;command_headset&quot;） <br />
       <br /> {/* Btw, clown is also allowed. But we don't tell them that */}
       <br />
-      NT Readable languages: <br />
-      (var = languages.language_name) <br />1 (common) <br />2 (monkey) <br />3
-      (robot) <br />4 (draconic) <br />5 (beachtounge) <br />6 (sylvan) <br />7
-      (voltaic) <br />8 (calcic) <br />9 (moffic) <br />
-      10 (ash) <br />
-      11 (yangyu) <br />
-      12 (uncommon) <br />
-      13 (gutter) <br />
-      14 (nekomimetic) <br />
-      15 (slime) <br />
-      16 (siiktajr) <br />
-      17 (spacer) <br />
-      18 (akulan) <br />
-      19 (interslavic) <br />
-      20 (canilunzt) <br />
-      21 (skrell) <br />
-      22 (schechi) <br />
-      23 (marish) <br />
+      纳米传讯支持的语言 <br />
+      用法示例：languages.common <br />1 银河通用语（common） <br />2 黑猩猩语（monkey） <br />3
+      编码音频语言（robot） <br />4 龙语（draconic） <br />5 海滩俚语（beachtounge） <br />6 林语（sylvan） <br />7
+      电语（voltaic） <br />8 骨语（calcic） <br />9 蛾语（moffic） <br />
+      10 灰烬语（ash） <br />
+      11 火星洋语（yangyu） <br />
+      12 银河异通用语（uncommon） <br />
+      13 冥王星语（gutter） <br />
+      14 猫语（nekomimetic） <br />
+      15 史莱姆语（slime） <br />
+      16 西克玛斯语（siikmaas） <br />
+      17 太空人语（spacer） <br />
+      18 泰维鲁阿科语（te velu akko） <br />
+      19 斯拉夫共通语（interslavic） <br />
+      20 犬语（canilunzt） <br />
+      21 斯克雷尔语（skrell） <br />
+      22 谢奇语（schechi） <br />
+      23 玛尔语（marish） <br />
       <br />
       <br />
-      Broadcasted signals will not run itself through Scripts.
+      脚本广播的信号不会再次触发脚本。
     </Section>
   );
 };

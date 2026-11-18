@@ -400,7 +400,7 @@
 	self_message += span_danger(" 你已被自身的死亡衰退杀死，这使你无法回到身体，甚至无法被复活。\
 	你想怎么演绎都行——这次死亡可以是暂时的，也可以是永久的——你也许会、也许不会出现在灵魂捕手中——全看你自己。")
 
-	owner.log_message("had their player ([key_name(src)]) DNR automatically via death degradation trait.", LOG_GAME, color = COLOR_GREEN, log_globally = FALSE)
+	owner.log_message("玩家（[key_name(src)]）因死亡衰退症自动启用了禁止复苏（DNR）。", LOG_GAME, color = COLOR_GREEN, log_globally = FALSE)
 	owner.visible_message(visible_message, ignored_mobs = self_message_target) // finally, send it
 	owner.balloon_alert_to_viewers("有可怕的事情发生了……")
 	to_chat(self_message_target, self_message)

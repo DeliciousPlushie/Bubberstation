@@ -57,7 +57,7 @@
 	src.exp = exp
 
 /datum/ntsl_node/expression/expression_operator/ToString()
-	return "operator: [name]"
+	return "运算符：[name]"
 
 /datum/ntsl_node/expression/member
 	var/datum/ntsl_node/expression/object
@@ -137,4 +137,4 @@
 	src.value = value
 
 /datum/ntsl_node/expression/value/reference/ToString()
-	return "ref: [value] ([value.type])"
+	return "引用：[value]（[value.type]）"

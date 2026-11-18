@@ -31,6 +31,7 @@ const labels: Readonly<Record<string, string>> = {
   'Security Server': '安保服务器',
   'Corrupt File': '损坏文件',
   'Speech File': '语音文件',
+  'Execution Error': '执行错误',
   Normal: '普通',
   High: '高',
   Extreme: '极高',

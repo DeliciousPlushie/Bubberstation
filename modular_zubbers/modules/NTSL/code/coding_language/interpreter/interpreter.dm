@@ -103,7 +103,7 @@
 		return
 	var/datum/TCS_Compiler/Compiler = container
 	var/obj/machinery/telecomms/server/Holder = Compiler.Holder
-	var/message = "Potential crash-inducing NTSL script detected at telecommunications server [Compiler.Holder] ([Holder.x], [Holder.y], [Holder.z])."
+	var/message = "电信服务器 [Compiler.Holder]（[Holder.x], [Holder.y], [Holder.z]）检测到可能导致崩溃的 NTSL 脚本。"
 	alertadmins = TRUE
 	message_admins(message)
 

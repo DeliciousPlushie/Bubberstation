@@ -111,7 +111,7 @@
 							buf += char
 			if("\n")
 				. = new /datum/token/string(buf, line, COLUMN_LOCATION)
-				errors += new /datum/scriptError("Unterminated string. Newline reached.", .)
+				errors += new /datum/scriptError("字符串尚未闭合就遇到了换行符。", .)
 				line++
 				linepos = codepos
 				break
@@ -165,7 +165,7 @@
 		char = copytext(code, codepos, codepos + 1)
 	var/datum/token/number/T = new(buf, line, COLUMN_LOCATION)
 	if(isnull(text2num(buf)))
-		errors += new /datum/scriptError("Bad number: ", T)
+		errors += new /datum/scriptError("无效的数字：", T)
 		T.value = 0
 	codepos-- //allow main Scan() proc to read the next character
 	return T

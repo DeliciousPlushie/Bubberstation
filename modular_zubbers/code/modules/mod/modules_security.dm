@@ -26,4 +26,4 @@
 /obj/item/mod/module/shooting_assistant/ert
 	complexity = 0
 	removable = FALSE
-	desc = "An improved version of the uncommon BEPIS-technology funded Shooting Assistant. These never made it to mass production to market to TGMC or other external forces, but found a home in the Nanotrasen Emergency Response Corps' gear."
+	desc = "这款射击辅助模块改良自少见的 BEPIS 资助型号。它原本打算供应地球政府海军陆战队等外部武装，但一直未能量产，最终成了纳米传讯应急响应部队的装备。"

@@ -43,7 +43,7 @@
 /obj/machinery/telecomms/server/proc/add_entry(content, input)
 	var/datum/comm_log_entry/log = new
 	var/identifier = num2text( rand(-1000,1000) + world.time )
-	log.name = "[input] ([md5(identifier)])"
+	log.name = "[chinese_telecomms_label(input)]（[md5(identifier)]）"
 	log.input_type = input
 	log.parameters["message"] = content
 	log.parameters["language"] = /datum/language/common
@@ -56,24 +56,24 @@
 	///The character count of the code being compiled
 	var/code_length = length(rawcode)
 	if(is_banned_from(user.ckey, JOB_TELECOMMS_SPECIALIST))
-		to_chat(user, span_warning("You are banned from using NTSL."))
-		return "Unauthorized access."
+		to_chat(user, span_warning("你已被禁止使用 NTSL。"))
+		return "访问未获授权。"
 	if(QDELETED(Compiler))
 		return
 	//Check if it has any bad characters in it
 	if(!reject_bad_ntsl_text(rawcode, require_pretty = FALSE, allow_newline = TRUE, allow_code = TRUE))
 		rawcode = null
-		return "Please use galactic common characters only."
+		return "请只使用银河通用语字符。"
 	//Check if it is over the character limit which is 15000 due to TGUI having a hard time handling bigger scripts
 	if(code_length > max_characters)
 		rawcode = null
-		return "Over character limit: [code_length]/[max_characters]"
+		return "字符数超出限制：[code_length]/[max_characters]"
 	if(!COOLDOWN_FINISHED(src, compile_cooldown))
-		return "Servers are recharging, please wait."
+		return "服务器正在充能，请稍候。"
 	var/list/compileerrors = Compiler.Compile(rawcode)
 	COOLDOWN_START(src, compile_cooldown, 2 SECONDS)
 	if(!length(compileerrors) && (compiledcode != rawcode))
-		logger.Log(LOG_CATEGORY_NTSL, "Uploaded by [user]: [rawcode]")
+		logger.Log(LOG_CATEGORY_NTSL, "[user] 上传了代码：[rawcode]")
 		compiledcode = rawcode
 	if(istype(user.mind?.assigned_role, /datum/job/telecomms_specialist)) //achivement description says only Signal Technician gets the achivement
 		var/freq = length(freq_listening) ? freq_listening[1] : 1459

@@ -15,7 +15,7 @@
  * Ex: !TRUE = FALSE and !FALSE = TRUE
  */
 /datum/ntsl_node/expression/expression_operator/unary/LogicalNot
-	name = "logical not"
+	name = "逻辑非"
 
 /**
  * BitwiseNot
@@ -24,14 +24,14 @@
  * Ex: ~10 (decimal 2) = 01 (decimal 1)
  */
 /datum/ntsl_node/expression/expression_operator/unary/BitwiseNot
-	name = "bitwise not"
+	name = "按位取反"
 
 /**
  * Minus
  * Returns -x
  */
 /datum/ntsl_node/expression/expression_operator/unary/Minus
-	name = "minus"
+	name = "取负"
 
 /**
  * Group

@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/freqpart = radio_freq ? "\[[chinese_radio_channel_display(get_radio_name(radio_freq, radio_freq_name))]\] " : "" // BUBBER EDIT: Chinese channel display
 	//Speaker name
 	var/realnamepart = "[speaker.get_voice(TRUE)][speaker.get_alt_name()]" // BUBBER EDIT ADDITION
-	var/namepart = "[speaker.get_voice()][speaker.get_alt_name()]" // BUBBER EDIT
+	var/namepart = "[speaker.get_voice()][speaker.get_alt_name(for_display = TRUE)]" // BUBBER EDIT
 	// var/namepart = message_mods[MODE_SPEAKER_NAME_OVERRIDE] || speaker.get_message_voice(visible_name) BUBBER EDIT ORIGINAL
 
 	//End name span.

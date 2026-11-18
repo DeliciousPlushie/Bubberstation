@@ -272,7 +272,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	if(isnum(msg))
 		msg = "[msg]"
 	else if(!msg)
-		msg = "*beep*"
+		msg = "*哔*"
 	signal.data["message"] = msg
 
 	signal.frequency = script_signal.get_clean_property("freq", signal.frequency)
@@ -477,7 +477,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 
 		connection.post_signal(executed_server, signal)
 
-		message_admins("Telecomms server \"[executed_server.id]\" sent a signal command, which was triggered by NTSL<B>: </B> [format_frequency(freq)]/[code]")
+		message_admins("电信服务器“[executed_server.id]”在 NTSL 脚本触发下发送了信号指令，频率/代码为 <B>[format_frequency(freq)]/[code]</B>。")
 
 ///Broadcasts a message to the radio.
 /datum/n_function/default/broadcast
@@ -511,7 +511,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	if(isnum(message)) // Allows for setting $content to a number value
 		message = "[message]"
 	if((!message) && message != 0)
-		message = "*beep*"
+		message = "*哔*"
 	if(!source)
 		source = "[html_encode(uppertext(S.id))]"
 		//hradio = new // sets the hradio as a radio intercom

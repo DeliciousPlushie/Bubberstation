@@ -80,7 +80,7 @@
 	if(current_list && length(current_list))
 		ifstmt = current_list[length(current_list)] //Get the last statement in the current block
 	if(!ifstmt || !istype(ifstmt) || ifstmt.else_if)
-		parser.errors += new /datum/scriptError/ExpectedToken("if statement", parser.curToken)
+		parser.errors += new /datum/scriptError/ExpectedToken("if 语句", parser.curToken)
 		return KW_FAIL
 
 	var/datum/ntsl_node/statement/IfStatement/ElseIf/stmt = new(parser.curToken)
@@ -104,7 +104,7 @@
 	var/datum/ntsl_node/statement/IfStatement/stmt
 	if(current_list && length(current_list)) stmt = current_list[length(current_list)] //Get the last statement in the current block
 	if(!stmt || !istype(stmt) || stmt.else_block) //Ensure that it is an if statement
-		parser.errors += new /datum/scriptError/ExpectedToken("if statement",parser.curToken)
+		parser.errors += new /datum/scriptError/ExpectedToken("if 语句",parser.curToken)
 		return KW_FAIL
 	parser.NextToken() //skip 'else' token
 	if(!parser.CheckToken("{", /datum/token/symbol, skip = 0))

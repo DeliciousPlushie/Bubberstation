@@ -240,7 +240,7 @@ export function AceEditor(props: Props) {
         })}
       />
       <div
-        title={isSynced ? 'All changes saved' : 'Unsaved changes'}
+        title={isSynced ? '所有更改均已保存' : '有尚未保存的更改'}
         style={{
           position: 'absolute',
           bottom: '1em',
