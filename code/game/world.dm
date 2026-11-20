@@ -387,6 +387,8 @@ GLOBAL_VAR_INIT(last_maptick_time, 0)
 
 	TgsReboot() // TGS can decide to kill us right here, so it's important to do it last
 
+	world.Export("http://127.0.0.1:8081/restart")//重启识别
+
 	..()
 	#endif
 
