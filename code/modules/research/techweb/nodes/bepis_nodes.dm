@@ -9,7 +9,7 @@
 	description = "原本被认为不具备商业可行性的照明与视觉技术应用。"
 	unlocked_designs = list(
 		/datum/design/bright_helmet,
-		/datum/design/rld_mini,
+		// /datum/design/rld_mini, //BUBBER EDIT - moved to construction node in techweb
 		/datum/design/photon_cannon,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)

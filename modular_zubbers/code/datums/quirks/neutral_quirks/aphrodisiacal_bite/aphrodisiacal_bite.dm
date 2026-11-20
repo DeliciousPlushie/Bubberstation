@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/aphrodisiacal_bite
 	name = "注入催情剂"
-	desc = "用尖牙咬住他人，注入你的催情剂。"
+	desc = "用尖牙咬住他人，注入你的催情剂。右键可切换毒液。"
 
 	button_icon = 'modular_zubbers/icons/mob/actions/quirks/aphrodisiacal_bite.dmi'
 	button_icon_state = "aphrodisiac"
@@ -28,6 +28,12 @@
 	to_inject = quantity_override || reagent_spec[1]
 	cooldown_time = cooldown_override || reagent_spec[2]
 
+/datum/action/cooldown/mob_cooldown/aphrodisiacal_bite/Trigger(mob/clicker, trigger_flags, atom/target)
+	if(trigger_flags & TRIGGER_SECONDARY_ACTION)
+		var/new_reagent = tgui_input_list(clicker, "Select which venom to inject.", "Venom Selection", /datum/preference/choiced/aphrodisiacal_bite_venom::aphrodisiacal_bite_choice_specs)
+		set_reagent(new_reagent)
+	. = ..()
+
 /datum/action/cooldown/mob_cooldown/aphrodisiacal_bite/set_click_ability(mob/on_who)
 	. = ..()
 	if (!.)
@@ -46,10 +52,6 @@
 
 	if (!owner.Adjacent(target_atom))
 		owner.balloon_alert(owner, "太远了！")
-		return FALSE
-
-	if (target_atom == owner)
-		owner.balloon_alert(owner, "不能咬自己！")
 		return FALSE
 
 	if(!iscarbon(target_atom))
