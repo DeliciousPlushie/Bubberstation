@@ -76,12 +76,13 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	var/datum/n_scriptOptions/options = new()
 	var/datum/n_Scanner/nS_Scanner/scanner = new(code, options)
 	var/list/datum/token/tokens = scanner.Scan()
+	if(length(scanner.errors)) // 自定义修改：词法出错时直接返回诊断，避免解析不完整的词元序列
+		return scanner.errors
 	var/datum/n_Parser/nS_Parser/parser = new(tokens, options)
 	var/datum/ntsl_node/BlockDefinition/GlobalBlock/program = parser.Parse()
 
 	var/list/returnerrors = list()
 
-	returnerrors += scanner.errors
 	returnerrors += parser.errors
 
 	if(length(returnerrors))

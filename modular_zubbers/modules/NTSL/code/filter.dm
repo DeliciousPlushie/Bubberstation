@@ -58,9 +58,13 @@
 	for(var/i = 1, i <= lenbytes, i += length(char))
 		char = text[i]
 		switch(text2ascii(char))
-			if(9, 62, 60, 92, 47) // tab, <, >, \, /
+			if(9) // 自定义修改：把制表符单独作为空白处理
 				if(!allow_code)
 					return
+			if(62, 60, 92, 47) // 自定义修改：允许的代码符号计入非空白字符
+				if(!allow_code)
+					return
+				non_whitespace = TRUE
 			if(10, 13) //Carriage returns (CR) and newline (NL)
 				if(!allow_newline)
 					return
@@ -72,9 +76,12 @@
 				return
 			if(32)
 				continue
-			if(127 to INFINITY)
+			if(127 to 159) // 自定义修改：即使源码允许中文，也须拒绝 DEL 和 C1 控制字符
+				return
+			if(160 to INFINITY) // 自定义修改：允许 Unicode 源码进入词法检查，以便报告所在行
 				if(ascii_only)
 					return
+				non_whitespace = TRUE
 			else
 				non_whitespace = TRUE
 	if(non_whitespace)

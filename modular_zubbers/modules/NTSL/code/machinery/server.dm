@@ -51,23 +51,21 @@
 	update_logs()
 
 /obj/machinery/telecomms/server/proc/compile(mob/user = usr) as /list
-	///Maximum amount of characters that can be in a script
-	var/max_characters = 15000
-	///The character count of the code being compiled
+	///Maximum script size in bytes
+	var/max_bytes = 15000 // 自定义修改：沿用原有的源码字节上限
+	///Byte length of the submitted source
 	var/code_length = length(rawcode)
 	if(is_banned_from(user.ckey, JOB_TELECOMMS_SPECIALIST))
 		to_chat(user, span_warning("你已被禁止使用 NTSL。"))
 		return "访问未获授权。"
 	if(QDELETED(Compiler))
 		return
-	//Check if it has any bad characters in it
-	if(!reject_bad_ntsl_text(rawcode, require_pretty = FALSE, allow_newline = TRUE, allow_code = TRUE))
+	if(code_length > max_bytes) // 自定义修改：在遍历源码前检查其 UTF-8 字节大小
 		rawcode = null
-		return "请只使用银河通用语字符。"
-	//Check if it is over the character limit which is 15000 due to TGUI having a hard time handling bigger scripts
-	if(code_length > max_characters)
+		return "源码超出大小限制：[code_length]/[max_bytes] 字节。"
+	if(!reject_bad_ntsl_text(rawcode, ascii_only = FALSE, require_pretty = FALSE, allow_newline = TRUE, allow_code = TRUE)) // 自定义修改：允许中文字符串和注释，由扫描器限制其使用位置
 		rawcode = null
-		return "字符数超出限制：[code_length]/[max_characters]"
+		return "源码不能为空，也不能包含不支持的控制字符。"
 	if(!COOLDOWN_FINISHED(src, compile_cooldown))
 		return "服务器正在充能，请稍候。"
 	var/list/compileerrors = Compiler.Compile(rawcode)

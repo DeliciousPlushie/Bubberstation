@@ -58,15 +58,17 @@
 /datum/n_Scanner/nS_Scanner/Scan()
 	var/list/datum/token/tokens = new
 	for(, codepos <= length(code), codepos++)
-		var/char = copytext(code, codepos, codepos + 1)
-		var/twochar = copytext(code, codepos, codepos + 2) // For finding comment syntax
+		var/char = code[codepos] // 自定义修改：按字节位置读取完整字符，以识别语法位置的非 ASCII 输入
+		if(length(char) > 1)
+			errors += new /datum/scriptError("第 [line] 行：“[char]”只能出现在字符串或注释中；语法符号请使用半角字符。")
+			break
 		if(char == "\n")
 			line++
 			linepos = codepos
 
 		if(ignore.Find(char))
 			continue
-		else if(twochar == "//" || twochar == "/*")
+		else if(char == "/" && codepos < length(code) && (code[codepos + 1] in list("/", "*"))) // 自定义修改：只在斜杠后按完整字符识别注释
 			ReadComment()
 		else if(end_stmt.Find(char))
 			tokens += new /datum/token/end(char, line, COLUMN_LOCATION)
@@ -93,12 +95,15 @@
  */
 /datum/n_Scanner/nS_Scanner/proc/ReadString(start)
 	var/buf
-	for(, codepos <= length(code), codepos++)//codepos to length(code))
-		var/char = copytext(code, codepos, codepos + 1)
+	var/char // 自定义修改：用当前字符的 UTF-8 字节宽度推进字符串游标
+	for(, codepos <= length(code), codepos += length(char))
+		char = code[codepos]
 		switch(char)
 			if("\\")					//Backslash (\) encountered in string
 				codepos++ //Skip next character in string, since it was escaped by a backslash
-				char = copytext(code, codepos, codepos + 1)
+				if(codepos > length(code)) // 自定义修改：末尾孤立的反斜杠没有可读取的转义字符
+					break
+				char = code[codepos] // 自定义修改：转义分支也保留完整的多字节字符
 				switch(char)
 					if("\\") //Double backslash
 						buf += "\\"
@@ -120,17 +125,19 @@
 					break
 				else
 					buf += char //Just a normal character in a string
+	if(codepos > length(code)) // 自定义修改：文件结束仍未闭合时报告字符串所在行
+		errors += new /datum/scriptError("第 [line] 行：字符串缺少结束引号。")
 	if(!.)
 		return new /datum/token/string(buf, line, COLUMN_LOCATION)
 
 ///Reads characters separated by an item in <delim> into a token.
 /datum/n_Scanner/nS_Scanner/proc/ReadWord()
-	var/char = copytext(code, codepos, codepos + 1)
 	var/buf
-
-	while(!delim.Find(char) && codepos <= length(code))
+	for(, codepos <= length(code), codepos++) // 自定义修改：单词遇到中文时交还主扫描器，以便报告非法标识符
+		var/char = code[codepos]
+		if(length(char) > 1 || delim.Find(char))
+			break
 		buf += char
-		char = copytext(code, ++codepos, codepos + 1)
 	codepos-- //allow main Scan() proc to read the delimiter
 	if(options.keywords.Find(buf))
 		return new /datum/token/keyword(buf, line, COLUMN_LOCATION)
@@ -146,7 +153,7 @@
 		buf += char
 		if(++codepos > length(code))
 			break
-		char = copytext(code, codepos, codepos + 1)
+		char = code[codepos] // 自定义修改：前瞻完整字符，使紧邻运算符的中文能回到主扫描器报错
 
 	codepos-- //allow main Scan() proc to read the next character
 	return new /datum/token/symbol(buf, line, COLUMN_LOCATION)
@@ -162,7 +169,7 @@
 			dec = 1
 		buf += char
 		codepos++
-		char = copytext(code, codepos, codepos + 1)
+		char = codepos <= length(code) ? code[codepos] : "" // 自定义修改：数字结束时前瞻完整字符并处理文件结尾
 	var/datum/token/number/T = new(buf, line, COLUMN_LOCATION)
 	if(isnull(text2num(buf)))
 		errors += new /datum/scriptError("无效的数字：", T)
@@ -179,28 +186,19 @@
  * All it does is just pass var/codepos through the comments until it reaches the end of'em.
  */
 /datum/n_Scanner/nS_Scanner/proc/ReadComment()
-	// Remember that we still have that $codepos "pointer" variable to use.
-	var/longeur = length(code) // So I don't call for var/code's length every while loop
-
-	if(copytext(code, codepos, codepos + 2) == "//") // If line comment
-		++codepos // Eat the current comment start, halfway
-		while(++codepos <= longeur) // Second half of the eating, on the first eval
-			if(copytext(code, codepos, codepos + 1) == "\n") // then stop on the newline
-				line++
-				linepos = codepos
+	var/block_comment = code[codepos + 1] == "*" // 自定义修改：两种注释共用 UTF-8 字符游标，保留换行位置与结束标记
+	var/char
+	for(codepos += 2, codepos <= length(code), codepos += length(char))
+		char = code[codepos]
+		if(char == "\n")
+			line++
+			linepos = codepos
+			if(!block_comment)
 				return
-	else // If long comment
-		++codepos // Eat the current comment start, halfway
-		while(++codepos <= longeur) // Ditto, on the first eval
-			if(copytext(code, codepos, codepos + 2) == "*/") // then stop on any */ 's'
-				++codepos // Eat the comment end
-				//but not all of it, because the for-loop this is in
-				//will increment it again later.
-				return
-			else if(copytext(code, codepos, codepos + 1) == "\n") // We still have to count line numbers!
-				line++
-				linepos = codepos
-		//Else if the longcomment didn't end, do an error
+		else if(block_comment && char == "*" && codepos < length(code) && code[codepos + 1] == "/")
+			codepos++
+			return
+	if(block_comment)
 		errors += new /datum/scriptError/UnterminatedComment()
 
 #undef COLUMN_LOCATION
